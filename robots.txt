@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wearecustomr.com.au/sitemap.xml

@@ -1,0 +1,59 @@
+{
+  "siteName": "Customr",
+  "tagline": "Your go-to partner for Customer Data & Insights, CRM, Loyalty & Technology",
+  "primaryColor": "#2b303a",
+  "secondaryColor": "#f4e9e2",
+  "accentColor": "#1c84d9",
+  "logo": {
+    "light": "/assets/images/logo-customr.svg",
+    "dark": "/assets/images/logo-customr.svg"
+  },
+  "contact": {
+    "email": "hello@wearecustomr.com.au",
+    "phone": "",
+    "address": "",
+    "abn": ""
+  },
+  "social": {
+    "linkedin": "https://www.linkedin.com/company/",
+    "instagram": "https://www.instagram.com/"
+  },
+  "analytics": {
+    "ga4MeasurementId": "",
+    "gtmId": "",
+    "consentMode": true
+  },
+  "newsletter": {
+    "provider": "formspree",
+    "endpoint": "https://formspree.io/f/your-id",
+    "recaptchaSiteKey": ""
+  },
+  "integrations": {
+    "calendly": "",
+    "chatSnippet": ""
+  },
+  "seo": {
+    "defaultTitle": "Customr \u2014 Customer Data, CRM, Loyalty & Technology",
+    "defaultDescription": "Data-led consulting across Customer Data & Insights, CRM, Loyalty, and Technology.",
+    "ogImage": "/assets/images/og-default.svg",
+    "robotsPolicy": "index,follow"
+  },
+  "nav": [
+    {
+      "label": "Services",
+      "href": "/services.html"
+    },
+    {
+      "label": "About Us",
+      "href": "/about.html"
+    },
+    {
+      "label": "Blog",
+      "href": "/blog/index.html"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact.html"
+    }
+  ]
+}

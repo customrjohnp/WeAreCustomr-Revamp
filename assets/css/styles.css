@@ -1,0 +1,45 @@
+
+:root{
+  --brand-bg:#ffffff;
+  --brand-text:#2b303a;
+  --brand-muted:#4b5563;
+  --brand-accent:#1c84d9;
+  --brand-accent-alt:#10ad66;
+  --brand-surface:#f4e9e2;
+  --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--brand-text);background:var(--brand-bg);line-height:1.6}
+img{max-width:100%;height:auto}
+a{color:var(--brand-accent);text-decoration:none} a:hover{text-decoration:underline}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+.grid{display:grid;gap:24px} .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:900px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
+.btn{display:inline-block;padding:12px 18px;border-radius:var(--radius);background:var(--brand-accent);color:#fff;font-weight:600;border:0;box-shadow:var(--shadow)}
+.btn.ghost{background:transparent;color:var(--brand-text);border:1px solid #e5e7eb;box-shadow:none}
+header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:50}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.navbar nav a{margin:0 10px;color:#2b303a}
+.navbar .menu-toggle{display:none}
+@media (max-width:900px){.navbar nav{display:none;position:absolute;left:0;right:0;top:60px;background:#fff;border-top:1px solid #eee;padding:10px 20px} .navbar.open nav{display:block} .navbar .menu-toggle{display:inline-flex}}
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{left:20px;top:20px;width:auto;height:auto;background:#000;color:#fff;padding:8px;border-radius:6px}
+.hero{padding:72px 0;background:linear-gradient(180deg,#ffffff 0%, #f4e9e2 100%);}
+.hero .eyebrow{font-weight:700;color:var(--brand-accent);letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+.hero h1{font-size:clamp(28px,6vw,56px);line-height:1.05;margin:0 0 10px}
+.hero p{max-width:780px;color:var(--brand-muted);font-size:18px}
+.section{padding:56px 0}
+.card{background:#fff;border:1px solid #eee;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.footer{background:#2b303a;color:#e2e8f0;padding:40px 0;margin-top:40px}
+.footer a{color:#cbd5e1}
+.footer .small{color:#94a3b8;font-size:14px}
+.badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:9999px;background:#eef2ff;color:#3730a3;font-weight:600;font-size:12px}
+.fade-in{opacity:0;transform:translateY(10px);transition:opacity .6s ease, transform .6s ease}
+.fade-in.visible{opacity:1;transform:none}
+.tour-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:1000}
+.tour-overlay.active{display:block}
+.tour-tooltip{position:absolute;max-width:320px;background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);border:1px solid #e5e7eb}
+.tour-tooltip h4{margin:0 0 6px}
+.tour-controls{display:flex;gap:8px;margin-top:10px}
+.tour-highlight{position:absolute;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.5), 0 0 0 3px #fff;transition:all .2s}
