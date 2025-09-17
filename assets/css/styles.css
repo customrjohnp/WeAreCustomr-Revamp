@@ -59,3 +59,30 @@ header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid
   :root { --logo-h: 30px; }
   .hero{ padding: 32px 0; }
 }
+/* --- Tour sizing tidy-up --- */
+.tour-tooltip { max-width: 340px; }
+.tour-controls{
+  display: flex;
+  flex-wrap: wrap;           /* allow wrap instead of squishing */
+  gap: 8px;
+  align-items: center;
+}
+.tour-tooltip .btn{
+  padding: 8px 12px;         /* smaller buttons */
+  font-size: 14px;
+  line-height: 1.1;
+  border-radius: 10px;
+  box-shadow: none;          /* avoid heavy shadows in tooltip */
+  white-space: nowrap;       /* keep labels on one line */
+}
+.tour-tooltip .btn.ghost{
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  color: var(--brand-text);
+}
+
+/* Optional: make the CTA full-width on its own row */
+.tour-controls a.btn{
+  width: 100%;
+  text-align: center;
+}
