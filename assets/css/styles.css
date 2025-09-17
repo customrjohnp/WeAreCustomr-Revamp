@@ -43,3 +43,19 @@ header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid
 .tour-tooltip h4{margin:0 0 6px}
 .tour-controls{display:flex;gap:8px;margin-top:10px}
 .tour-highlight{position:absolute;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.5), 0 0 0 3px #fff;transition:all .2s}
+/* Header logo sizing */
+:root { --logo-h: 36px; }            /* tweak: 28–40px usually looks right */
+.navbar .brand img{
+  height: var(--logo-h);
+  width: auto;
+  display: block;
+  max-width: none;                    /* override global img{max-width:100%} */
+}
+
+/* Optional: tighten spacing */
+.navbar{ padding: 10px 0; }           /* was 14px */
+.hero{ padding: 40px 0; }             /* was ~72px */
+@media (max-width: 900px){
+  :root { --logo-h: 30px; }
+  .hero{ padding: 32px 0; }
+}
