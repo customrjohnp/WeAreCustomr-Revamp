@@ -1,119 +1,95 @@
-
 :root{
   --brand-bg:#ffffff;
   --brand-text:#2b303a;
   --brand-muted:#4b5563;
-  --brand-accent:#1c84d9;
+  --brand-accent:#1c84d9;        /* link + default button color */
   --brand-accent-alt:#10ad66;
   --brand-surface:#f4e9e2;
-  --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.08);
+  --brand-cta:#F4A261;           /* ORANGE CTA */
+  --logo-h:44px;                 /* header logo height (desktop) */
+  --maxw:1200px; 
+  --radius:14px; 
+  --shadow:0 10px 30px rgba(0,0,0,.08);
 }
-*{box-sizing:border-box} html{scroll-behavior:smooth}
+
+/* Base */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--brand-text);background:var(--brand-bg);line-height:1.6}
 img{max-width:100%;height:auto}
-a{color:var(--brand-accent);text-decoration:none} a:hover{text-decoration:underline}
+a{color:var(--brand-accent);text-decoration:none}
+a:hover{text-decoration:underline}
 .container{max-width:var(--maxw);margin:0 auto;padding:0 20px}
-.grid{display:grid;gap:24px} .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+/* Grid */
+.grid{display:grid;gap:24px}
+.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:900px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
+
+/* Buttons */
 .btn{display:inline-block;padding:12px 18px;border-radius:var(--radius);background:var(--brand-accent);color:#fff;font-weight:600;border:0;box-shadow:var(--shadow)}
 .btn.ghost{background:transparent;color:var(--brand-text);border:1px solid #e5e7eb;box-shadow:none}
-header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:50}
-.navbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-.navbar nav a{margin:0 10px;color:#2b303a}
+/* Brand CTA (orange) */
+.btn.cta{background:var(--brand-cta);border-color:var(--brand-cta);color:#fff}
+.btn.cta:hover{filter:brightness(.95)}
+.btn.cta:focus{outline:3px solid color-mix(in srgb,var(--brand-cta),#fff 70%);outline-offset:2px}
+
+/* Header / nav */
+header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.navbar .brand img{height:var(--logo-h);width:auto;display:block;max-width:none}
+.navbar nav a{margin:0 10px;color:var(--brand-text);font-size:17px}
 .navbar .menu-toggle{display:none}
-@media (max-width:900px){.navbar nav{display:none;position:absolute;left:0;right:0;top:60px;background:#fff;border-top:1px solid #eee;padding:10px 20px} .navbar.open nav{display:block} .navbar .menu-toggle{display:inline-flex}}
+@media (max-width:1200px){:root{--logo-h:38px}}
+@media (max-width:900px){
+  :root{--logo-h:32px}
+  .navbar nav{display:none;position:absolute;left:0;right:0;top:60px;background:#fff;border-top:1px solid #eee;padding:10px 20px}
+  .navbar.open nav{display:block}
+  .navbar .menu-toggle{display:inline-flex}
+}
+
+/* Skip link */
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 .skip-link:focus{left:20px;top:20px;width:auto;height:auto;background:#000;color:#fff;padding:8px;border-radius:6px}
-.hero{padding:72px 0;background:linear-gradient(180deg,#ffffff 0%, #f4e9e2 100%);}
+
+/* Hero */
+.hero{padding:48px 0;background:linear-gradient(180deg,#ffffff 0%, var(--brand-surface) 100%)}
 .hero .eyebrow{font-weight:700;color:var(--brand-accent);letter-spacing:.08em;text-transform:uppercase;font-size:12px}
 .hero h1{font-size:clamp(28px,6vw,56px);line-height:1.05;margin:0 0 10px}
 .hero p{max-width:780px;color:var(--brand-muted);font-size:18px}
+
+/* Sections & cards */
 .section{padding:56px 0}
 .card{background:#fff;border:1px solid #eee;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
-.footer{background:#2b303a;color:#e2e8f0;padding:40px 0;margin-top:40px}
+
+/* Footer (compact) */
+.footer{background:var(--brand-text);color:#e2e8f0;padding:22px 0;margin-top:40px}
 .footer a{color:#cbd5e1}
-.footer .small{color:#94a3b8;font-size:14px}
+.footer .small{color:#94a3b8;font-size:13px}
+.footer .container{gap:20px;align-items:start}
+.footer img{height:20px;width:auto;display:block}
+.footer strong{font-size:16px;margin-bottom:6px;display:inline-block}
+.footer a,.footer p{line-height:1.4;margin:6px 0}
+.footer .btn{padding:10px 14px;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+@media (max-width:900px){
+  .footer{padding:18px 0}
+  .footer .container{gap:12px}
+  .footer .btn{width:100%}
+}
+
+/* Badges & animations */
 .badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:9999px;background:#eef2ff;color:#3730a3;font-weight:600;font-size:12px}
 .fade-in{opacity:0;transform:translateY(10px);transition:opacity .6s ease, transform .6s ease}
 .fade-in.visible{opacity:1;transform:none}
+
+/* Tour */
 .tour-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:1000}
 .tour-overlay.active{display:block}
-.tour-tooltip{position:absolute;max-width:320px;background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);border:1px solid #e5e7eb}
+.tour-tooltip{position:absolute;max-width:340px;background:#fff;border-radius:12px;padding:16px;box-shadow:var(--shadow);border:1px solid #e5e7eb}
 .tour-tooltip h4{margin:0 0 6px}
-.tour-controls{display:flex;gap:8px;margin-top:10px}
+.tour-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.tour-tooltip .btn{padding:8px 12px;font-size:14px;line-height:1.1;border-radius:10px;box-shadow:none;white-space:nowrap}
+.tour-tooltip .btn.ghost{background:#fff;border:1px solid #e5e7eb;color:var(--brand-text)}
+.tour-controls a.btn{width:100%;text-align:center} /* CTA full-width in tooltip */
 .tour-highlight{position:absolute;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.5), 0 0 0 3px #fff;transition:all .2s}
-/* Header logo sizing */
-:root { --logo-h: 36px; }            /* tweak: 28–40px usually looks right */
-.navbar .brand img{
-  height: var(--logo-h);
-  width: auto;
-  display: block;
-  max-width: none;                    /* override global img{max-width:100%} */
-}
-
-/* Optional: tighten spacing */
-.navbar{ padding: 10px 0; }           /* was 14px */
-.hero{ padding: 40px 0; }             /* was ~72px */
-@media (max-width: 900px){
-  :root { --logo-h: 30px; }
-  .hero{ padding: 32px 0; }
-}
-/* --- Tour sizing tidy-up --- */
-.tour-tooltip { max-width: 340px; }
-.tour-controls{
-  display: flex;
-  flex-wrap: wrap;           /* allow wrap instead of squishing */
-  gap: 8px;
-  align-items: center;
-}
-.tour-tooltip .btn{
-  padding: 8px 12px;         /* smaller buttons */
-  font-size: 14px;
-  line-height: 1.1;
-  border-radius: 10px;
-  box-shadow: none;          /* avoid heavy shadows in tooltip */
-  white-space: nowrap;       /* keep labels on one line */
-}
-.tour-tooltip .btn.ghost{
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  color: var(--brand-text);
-}
-
-/* Optional: make the CTA full-width on its own row */
-.tour-controls a.btn{
-  width: 100%;
-  text-align: center;
-}
-/* Brand CTA color */
-:root { --brand-cta: #F4A261; }   /* ← replace with your exact orange hex */
-
-.btn.cta,
-.tour-tooltip .btn.cta{
-  background: var(--brand-cta);
-  border-color: var(--brand-cta);
-  color: #fff;
-}
-.btn.cta:hover,
-.tour-tooltip .btn.cta:hover{ filter: brightness(.95); }
-.btn.cta:focus{ outline: 3px solid color-mix(in srgb, var(--brand-cta), #fff 70%); outline-offset: 2px; }
-/* ---- Header / logo sizing ---- */
-:root { --logo-h: 44px; }                /* desktop logo height */
-@media (max-width: 1200px){ :root { --logo-h: 38px; } }
-@media (max-width: 900px){  :root { --logo-h: 32px; } }
-
-.navbar { padding: 16px 0; }             /* more vertical breathing room */
-.navbar .brand img{
-  height: var(--logo-h);
-  width: auto;
-  display: block;
-}
-
-/* Optional polish (subtle bottom shadow like your mock) */
-header.site-header{
-  box-shadow: 0 2px 12px rgba(0,0,0,.04);
-}
-
-/* Optional: slightly larger nav text to balance the bigger logo */
-.navbar nav a{ font-size: 17px; }
