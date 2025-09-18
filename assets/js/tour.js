@@ -2,7 +2,6 @@
   // =======================
   // PERSONALIZED TOUR STEPS
   // =======================
-  // Edit copy, selectors, placement, and CTA per step.
   const steps = [
     {
       selector: '.hero h1',
@@ -55,6 +54,7 @@
   document.body.appendChild(overlay);
 
   let i = 0;
+  let isProgrammaticScroll = false;
 
   // ==================
   // SCROLL + POSITION
@@ -65,21 +65,16 @@
 
   function smoothScrollTo(y) {
     return new Promise((resolve) => {
-      if (prefersReducedMotion()) {
-        window.scrollTo(0, y);
-        return resolve();
-      }
-      let timer;
+      if (prefersReducedMotion()) { window.scrollTo(0, y); return resolve(); }
+      let idle;
       const onScroll = () => {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          window.removeEventListener('scroll', onScroll);
-          resolve();
-        }, 120);
+        clearTimeout(idle);
+        idle = setTimeout(() => { window.removeEventListener('scroll', onScroll); resolve(); }, 140);
       };
       window.addEventListener('scroll', onScroll);
       window.scrollTo({ top: y, behavior: 'smooth' });
       onScroll();
+      setTimeout(() => { try { window.removeEventListener('scroll', onScroll); } catch(e){} resolve(); }, 1000);
     });
   }
 
@@ -94,11 +89,12 @@
     if (!step || !el) { next(); return; }
 
     if (doScroll) {
+      isProgrammaticScroll = true;
       const headerH = document.querySelector('.site-header')?.offsetHeight || 0;
       const r = el.getBoundingClientRect();
-      const targetY = Math.max(0, window.scrollY + r.top - headerH - 16);
-      const needsScroll = r.top < headerH + 20 || r.bottom > window.innerHeight - 20;
-      if (needsScroll) await smoothScrollTo(targetY);
+      const targetY = Math.max(0, window.scrollY + r.top - headerH - (window.innerHeight - r.height) / 2);
+      await smoothScrollTo(targetY);
+      isProgrammaticScroll = false;
     }
 
     const r2 = el.getBoundingClientRect();
@@ -108,47 +104,35 @@
     highlight.style.width  = (r2.width  + pad * 2) + 'px';
     highlight.style.height = (r2.height + pad * 2) + 'px';
 
-    // Build tooltip content (progress + CTA support)
+    // Build tooltip (progress + CTA). Only one block — no duplicates.
     const total = steps.length;
+    const isLast = (i === total - 1);
     const progress = `<div class="small" style="opacity:.65;margin-bottom:6px">Step ${i+1} of ${total}</div>`;
-    const ctaBtn = step.cta
-      ? `<a class="btn" href="${step.cta.href}" style="margin-right:8px">${step.cta.label}</a>`
-      : '';
+    const ctaBtn = step.cta ? `<a class="btn cta" href="${step.cta.href}">${step.cta.label}</a>` : '';
 
-    // Build tooltip content (progress + CTA support)
-const total = steps.length;
-const progress = `<div class="small" style="opacity:.65;margin-bottom:6px">Step ${i+1} of ${total}</div>`;
-const ctaBtn = step.cta
-  ? `<a class="btn cta" href="${step.cta.href}">${step.cta.label}</a>` // <-- make CTA orange
-  : '';
-const isLast = (i + 1 === total);
+    tooltip.innerHTML = `
+      ${progress}
+      <h4 style="margin-top:0">${step.title}</h4>
+      <p>${step.body}</p>
+      <div class="tour-controls">
+        ${ctaBtn}
+        <button class="btn ghost" data-action="prev">Back</button>
+        <button class="btn ${isLast ? 'cta' : 'ghost'}" data-action="${isLast ? 'finish' : 'next'}">
+          ${isLast ? 'Finish' : 'Next'}
+        </button>
+        <button class="btn ghost" data-action="close">Close</button>
+      </div>
+    `;
 
-// All nav buttons are ghost; only CTA is brand (orange)
-tooltip.innerHTML = `
-  ${progress}
-  <h4 style="margin-top:0">${step.title}</h4>
-  <p>${step.body}</p>
-  <div class="tour-controls">
-    ${ctaBtn}
-    <button class="btn ghost" data-action="prev">Back</button>
-    <button class="btn ghost" data-action="next">${isLast ? 'Finish' : 'Next'}</button>
-    <button class="btn ghost" data-action="close">Close</button>
-  </div>
-`;
-
-
+    // Tooltip placement + clamping
     const t = tooltip.getBoundingClientRect();
     let left = r2.left, top = r2.top;
     if (step.placement === 'bottom') { top = r2.bottom + 12; left = r2.left; }
     if (step.placement === 'top')    { top = r2.top - t.height - 12; left = r2.left; }
     if (step.placement === 'right')  { left = r2.right + 12; top = r2.top; }
     if (step.placement === 'left')   { left = r2.left - t.width - 12; top = r2.top; }
-
-    // keep tooltip on-screen
-    const safeL = Math.max(12, Math.min(window.innerWidth  - t.width  - 12, left));
-    const safeT = Math.max(12, Math.min(window.innerHeight - t.height - 12, top));
-    tooltip.style.left = safeL + 'px';
-    tooltip.style.top  = safeT + 'px';
+    tooltip.style.left = Math.max(12, Math.min(window.innerWidth  - t.width  - 12, left)) + 'px';
+    tooltip.style.top  = Math.max(12, Math.min(window.innerHeight - t.height - 12, top))  + 'px';
   }
 
   // =========
@@ -156,50 +140,49 @@ tooltip.innerHTML = `
   // =========
   function open()  { overlay.classList.add('active'); i = 0; position(true); }
   function close() { overlay.classList.remove('active'); }
-  function next() {
-  if (i >= steps.length - 1) {  // already on last step
-    close();                    // close the tour
-    return;
+  function next()  {
+    if (i >= steps.length - 1) { close(); return; } // finish on last step
+    i = i + 1;
+    position(true);
   }
-  i = i + 1;
-  position(true);
-}
+  function prev()  { i = Math.max(0, i - 1); position(true); }
 
-  function prev()  { i = Math.max(0, i - 1);               position(true); }
-
-  // Maintain alignment on resize/scroll
   window.addEventListener('resize', () => overlay.classList.contains('active') && position(false));
-  window.addEventListener('scroll', () => overlay.classList.contains('active') && position(false));
+  window.addEventListener('scroll', () => {
+    if (!overlay.classList.contains('active') || isProgrammaticScroll) return;
+    position(false);
+  });
 
-  // Click outside overlay to close
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-
-  // Tooltip buttons
+  // Clicks
   overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) { close(); return; }
     const btn = e.target.closest('button[data-action]');
     if (!btn) return;
     const action = btn.getAttribute('data-action');
-    if (action === 'close') close();
-    if (action === 'next')  next();
-    if (action === 'prev')  prev();
+    if (action === 'close')  close();
+    if (action === 'next')   next();
+    if (action === 'prev')   prev();
+    if (action === 'finish') close();
   });
 
-  // Keyboard support
+  // Keyboard
   window.addEventListener('keydown', (e) => {
     if (!overlay.classList.contains('active')) return;
     if (e.key === 'ArrowRight') next();
     if (e.key === 'ArrowLeft')  prev();
     if (e.key === 'Escape')     close();
+    if (e.key === 'Enter' && i === steps.length - 1) close();
   });
 
-  // Trigger: any element with data-start-tour
+  // Trigger
   document.addEventListener('click', (e) => {
     const t = e.target.closest('[data-start-tour]');
     if (t) { e.preventDefault(); open(); }
   });
 
-  // Optional: start with ?tour=1
-  if (new URLSearchParams(location.search).get('tour') === '1') {
-    open();
-  }
+  // URL trigger
+  if (new URLSearchParams(location.search).get('tour') === '1') open();
+
+  // debug
+  console.log('Tour loaded v3');
 })();
