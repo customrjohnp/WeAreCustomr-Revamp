@@ -98,3 +98,22 @@ header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid
 .btn.cta:hover,
 .tour-tooltip .btn.cta:hover{ filter: brightness(.95); }
 .btn.cta:focus{ outline: 3px solid color-mix(in srgb, var(--brand-cta), #fff 70%); outline-offset: 2px; }
+/* ---- Header / logo sizing ---- */
+:root { --logo-h: 44px; }                /* desktop logo height */
+@media (max-width: 1200px){ :root { --logo-h: 38px; } }
+@media (max-width: 900px){  :root { --logo-h: 32px; } }
+
+.navbar { padding: 16px 0; }             /* more vertical breathing room */
+.navbar .brand img{
+  height: var(--logo-h);
+  width: auto;
+  display: block;
+}
+
+/* Optional polish (subtle bottom shadow like your mock) */
+header.site-header{
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+
+/* Optional: slightly larger nav text to balance the bigger logo */
+.navbar nav a{ font-size: 17px; }
