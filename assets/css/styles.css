@@ -86,3 +86,15 @@ header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid
   width: 100%;
   text-align: center;
 }
+/* Brand CTA color */
+:root { --brand-cta: #F4A261; }   /* ← replace with your exact orange hex */
+
+.btn.cta,
+.tour-tooltip .btn.cta{
+  background: var(--brand-cta);
+  border-color: var(--brand-cta);
+  color: #fff;
+}
+.btn.cta:hover,
+.tour-tooltip .btn.cta:hover{ filter: brightness(.95); }
+.btn.cta:focus{ outline: 3px solid color-mix(in srgb, var(--brand-cta), #fff 70%); outline-offset: 2px; }
