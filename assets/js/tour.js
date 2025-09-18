@@ -156,7 +156,15 @@ tooltip.innerHTML = `
   // =========
   function open()  { overlay.classList.add('active'); i = 0; position(true); }
   function close() { overlay.classList.remove('active'); }
-  function next()  { i = Math.min(steps.length - 1, i + 1); position(true); }
+  function next() {
+  if (i >= steps.length - 1) {  // already on last step
+    close();                    // close the tour
+    return;
+  }
+  i = i + 1;
+  position(true);
+}
+
   function prev()  { i = Math.max(0, i - 1);               position(true); }
 
   // Maintain alignment on resize/scroll
