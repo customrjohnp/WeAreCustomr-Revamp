@@ -115,17 +115,27 @@
       ? `<a class="btn" href="${step.cta.href}" style="margin-right:8px">${step.cta.label}</a>`
       : '';
 
-    tooltip.innerHTML = `
-      ${progress}
-      <h4 style="margin-top:0">${step.title}</h4>
-      <p>${step.body}</p>
-      <div class="tour-controls">
-        ${ctaBtn}
-        <button class="btn ghost" data-action="prev">Back</button>
-        <button class="btn" data-action="next">${i+1===total ? 'Finish' : 'Next'}</button>
-        <button class="btn ghost" data-action="close">Close</button>
-      </div>
-    `;
+    // Build tooltip content (progress + CTA support)
+const total = steps.length;
+const progress = `<div class="small" style="opacity:.65;margin-bottom:6px">Step ${i+1} of ${total}</div>`;
+const ctaBtn = step.cta
+  ? `<a class="btn cta" href="${step.cta.href}">${step.cta.label}</a>` // <-- make CTA orange
+  : '';
+const isLast = (i + 1 === total);
+
+// All nav buttons are ghost; only CTA is brand (orange)
+tooltip.innerHTML = `
+  ${progress}
+  <h4 style="margin-top:0">${step.title}</h4>
+  <p>${step.body}</p>
+  <div class="tour-controls">
+    ${ctaBtn}
+    <button class="btn ghost" data-action="prev">Back</button>
+    <button class="btn ghost" data-action="next">${isLast ? 'Finish' : 'Next'}</button>
+    <button class="btn ghost" data-action="close">Close</button>
+  </div>
+`;
+
 
     const t = tooltip.getBoundingClientRect();
     let left = r2.left, top = r2.top;
