@@ -156,11 +156,13 @@ header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid
   width: auto;
   max-width: 90%;
   display: block;
-  filter: grayscale(100%);
-  opacity: .95;
-  transition: filter .2s ease, opacity .2s ease, transform .15s ease;
+  transition: transform .15s ease;
 }
-.logo-slider .card:hover img { filter: none; opacity: 1; transform: translateY(-1px); }
+
+.logo-slider .card:hover img {
+  transform: translateY(-1px);
+}
+
 
 .logo-slider .nav {
   position: absolute; top: 50%; transform: translateY(-50%);
