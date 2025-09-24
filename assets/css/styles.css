@@ -113,3 +113,64 @@ header.site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid
   .service-icon { width: 36px; height: 36px; }
   .card .icon-wrap { width: 56px; height: 56px; }
 }
+/* ========== Brands Carousel ========== */
+.brands-carousel .center { text-align: center; }
+.brands-carousel .subtle, .brands-carousel .center.subtle { 
+  color: var(--text-muted, #6b7280); 
+  margin-top: 6px; 
+}
+
+.logo-slider {
+  position: relative;
+  margin-top: 18px;
+  overflow: hidden;
+}
+
+.logo-slider .track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: 16px;
+  align-items: stretch;
+  scroll-snap-type: x mandatory;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.logo-slider .track::-webkit-scrollbar { display: none; }
+
+.logo-slider .card {
+  scroll-snap-align: start;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 1px 8px rgba(0,0,0,.06);
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+}
+.logo-slider .card img {
+  height: 44px;
+  width: auto;
+  max-width: 90%;
+  display: block;
+  filter: grayscale(100%);
+  opacity: .95;
+  transition: filter .2s ease, opacity .2s ease, transform .15s ease;
+}
+.logo-slider .card:hover img { filter: none; opacity: 1; transform: translateY(-1px); }
+
+.logo-slider .nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 999px;
+  border: none; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  cursor: pointer; display: grid; place-items: center;
+  font-size: 22px; line-height: 1; padding: 0; opacity: .9;
+}
+.logo-slider .nav:hover { opacity: 1; }
+.logo-slider .prev { left: 6px; }
+.logo-slider .next { right: 6px; }
+
+/* Small screens: show 1–2 cards; large screens widen cards */
+@media (min-width: 640px) { .logo-slider .track { grid-auto-columns: minmax(260px, 1fr); } }
+@media (min-width: 1024px){ .logo-slider .track { grid-auto-columns: minmax(300px, 1fr); } }
